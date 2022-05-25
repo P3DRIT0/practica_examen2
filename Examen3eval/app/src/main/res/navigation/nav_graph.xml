@@ -23,11 +23,17 @@
         android:name="com.pedro.examen3eval.Simple"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_simple">
+        <action
+            android:id="@+id/action_SecondFragment_to_compuesto"
+            app:destination="@id/compuesto" />
     </fragment>
     <fragment
         android:id="@+id/compuesto"
         android:name="com.pedro.examen3eval.Compuesto"
         android:label="Compuesto"
         tools:layout="@layout/fragment_compuesto">
+        <action
+            android:id="@+id/action_compuesto_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
     </fragment>
 </navigation>

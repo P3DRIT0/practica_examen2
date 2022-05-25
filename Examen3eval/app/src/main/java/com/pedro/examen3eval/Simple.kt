@@ -1,17 +1,18 @@
 package com.pedro.examen3eval
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pedro.examen3eval.databinding.ElementoexBinding
 import com.pedro.examen3eval.databinding.FragmentSimpleBinding
+
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -46,11 +47,11 @@ class Simple : Fragment() {
             val textViewnombre = binding.textView2
             val textViewautor = binding.textView3
             val borrar = binding.btnDelete
+            val info=binding.btnInfo
+
 
 
             init {
-                binding.btnDelete.setOnClickListener {
-                }
             }
 
 
@@ -72,6 +73,12 @@ class Simple : Fragment() {
             holder.textViewnombre.text = listadoDatos[position].titulo
             holder.textViewautor.text=listadoDatos[position].autor
             holder.img.setImageResource(listadoDatos[position].idImagen)
+            holder.borrar.setOnClickListener {
+                borrar(position)
+            }
+            holder.info.setOnClickListener {
+                info(position,holder.mView.context)
+            }
             with(holder) {
                 if (position % 2 == 0) { // Si la posición de la fila es par
                     mView.setBackgroundColor(Color.CYAN)
@@ -85,6 +92,19 @@ class Simple : Fragment() {
             }
         }
 
+        private fun info(position: Int, context: Context) {
+            val builder= AlertDialog.Builder( context)
+            builder.setTitle(""+listadoDatos[position].titulo + " - " + listadoDatos[position].autor)
+            builder.setMessage(listadoDatos[position].des)
+            builder.setNegativeButton("Cerrrar",{dialoInterface:DialogInterface,i:Int->})
+            builder.show()
+        }
+
+        private fun borrar(position: Int) {
+         listadoDatos.remove(listadoDatos[position]);
+            notifyDataSetChanged();
+        }
+
         override fun getItemCount() = listadoDatos.size
 
     }
@@ -93,30 +113,28 @@ class Simple : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.rock.setOnClickListener {
             borarlista();
-            canciones.add(Canciones("Abbey Road", "The Beatles",R.mipmap.ic_abbeyroad))
-            canciones.add(Canciones("Exile on Main Street", "The Rolling Stones",R.mipmap.ic_exileonmainst_foreground))
-            canciones.add(Canciones("The Velvet Underground", "he Velvet Underground and Nico",R.mipmap.ic_velvetunderground_foreground))
-            canciones.add(Canciones("Are You Experienced", "Jimi Hendrix",R.mipmap.ic_areyouexperienced_foreground))
-            canciones.add(Canciones("Back in Black", "AC/DC",R.mipmap.ic_backinblack_foreground))
-            canciones.add(Canciones("Appetite for Destruction", "Guns N’ Roses",R.mipmap.ic_appetitefordestruction_foreground))
-            canciones.add(Canciones("Led Zeppelin IV", "Led Zeppelin",R.mipmap.ic_ledzeppeliniv_foreground))
+            canciones.add(Canciones("Abbey Road", "The Beatles",R.mipmap.ic_abbeyroad,R.string.abbeyroad))
+            canciones.add(Canciones("Exile on Main Street", "The Rolling Stones",R.mipmap.ic_exileonmainst_foreground,R.string.exilesonmainstreet))
+            canciones.add(Canciones("The Velvet Underground", "he Velvet Underground and Nico",R.mipmap.ic_velvetunderground_foreground,R.string.velvetunderground))
+            canciones.add(Canciones("Are You Experienced", "Jimi Hendrix",R.mipmap.ic_areyouexperienced_foreground,R.string.areyouexperienced))
+            canciones.add(Canciones("Back in Black", "AC/DC",R.mipmap.ic_backinblack_foreground,R.string.backinblack))
+            canciones.add(Canciones("Appetite for Destruction", "Guns N’ Roses",R.mipmap.ic_appetitefordestruction_foreground,R.string.appetitefordestruction))
+            canciones.add(Canciones("Led Zeppelin IV", "Led Zeppelin",R.mipmap.ic_ledzeppeliniv_foreground,R.string.ledzeppeliniv))
             adaptador.notifyDataSetChanged()
 
         }
         binding.jazz.setOnClickListener {
             borarlista()
-            canciones.add(Canciones("Kind of Blue", "Miles Davis",R.mipmap.ic_kindofblue_foreground))
-            canciones.add(Canciones("Bitches Brew", "Miles Davis",R.mipmap.ic_bitchesbrew_foreground))
-            canciones.add(Canciones("A Love Supreme", "John Coltrane",R.mipmap.ic_alovesupreme_foreground))
-            canciones.add(Canciones("Are You Experienced", "Jimi Hendrix",R.mipmap.ic_whatsgoingon_foreground))
+            canciones.add(Canciones("Kind of Blue", "Miles Davis",R.mipmap.ic_kindofblue_foreground,R.string.kindofblue))
+            canciones.add(Canciones("Bitches Brew", "Miles Davis",R.mipmap.ic_bitchesbrew_foreground,R.string.bitchesbrew))
+            canciones.add(Canciones("A Love Supreme", "John Coltrane",R.mipmap.ic_alovesupreme_foreground,R.string.alovesupreme))
             adaptador.notifyDataSetChanged()
         }
         binding.Blues.setOnClickListener {
             borarlista()
-            canciones.add(Canciones("Lady Soul", "Aretha Franklin",R.mipmap.ic_ladysoul_foreground))
-            canciones.add(Canciones("I Never Loved a Man the Way I Love You", "Aretha Franklin",R.mipmap.ic_neverloved_foreground))
-            canciones.add(Canciones("What's Going On", "Marvin Gaye",R.mipmap.ic_velvetunderground_foreground))
-            canciones.add(Canciones("Are You Experienced", "Jimi Hendrix",R.mipmap.ic_whatsgoingon_foreground))
+            canciones.add(Canciones("Lady Soul", "Aretha Franklin",R.mipmap.ic_ladysoul_foreground,R.string.ladysoul))
+            canciones.add(Canciones("I Never Loved a Man the Way I Love You", "Aretha Franklin",R.mipmap.ic_neverloved_foreground,R.string.ineverloveda))
+            canciones.add(Canciones("What's Going On", "Marvin Gaye",R.mipmap.ic_velvetunderground_foreground,R.string.whatsgoingon))
             adaptador.notifyDataSetChanged()
         }
     }
@@ -128,6 +146,23 @@ class Simple : Fragment() {
 
     fun borarlista(){
         canciones.removeAll(canciones);
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.compuesta -> {
+                findNavController().navigate(SimpleDirections.actionSecondFragmentToCompuesto())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main,menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
 }
